@@ -21,17 +21,3 @@
 "- **Bước 4**: Lưu kết quả nếu cần.\n\n"
 
 --- Nguyễn Minh Quân ---
-
-Phân loại phản hồi khách hàng thành các loại như tích cực, tiêu cực, hoặc trung lập dựa trên thang điểm đánh giá. Áp dụng quy tắc:
-Tích cực: Đánh giá > 4 sao.
-Trung lập: Đánh giá từ 3 đến 4 sao.
-Tiêu cực: Đánh giá < 3 sao.
-Hiển thị số lượng sản phẩm thuộc từng nhóm trong giao diện (thống kê tổng quan).
-
-Tính tỷ lệ sản phẩm có đánh giá tích cực cao để đưa ra các khuyến nghị.
-Hiển thị danh sách sản phẩm được yêu thích nhất hoặc sản phẩm bị phàn nàn nhiều nhất.
-
-Xây dựng tính năng "Gợi ý sản phẩm tốt nhất" dựa trên:
-Cụm có rating cao nhất.
-Số lượng đánh giá lớn nhất.
-Hiển thị danh sách sản phẩm gợi ý trong giao diện.

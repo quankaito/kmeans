@@ -7,9 +7,9 @@ class DataGenerator:
         self.brands = ["Apple", "Samsung", "Dell", "HP", "Asus", "Lenovo"]
         
         # Tạo danh sách tên sản phẩm theo cấu trúc phổ biến
-        self.phone_names = ["iPhone", "Samsung Galaxy", "Xiaomi Mi", "Oppo Reno", "Vivo V"]
+        self.phone_names = ["iPhone", "Samsung Galaxy", "Xiaomi Mi", "Oppo Reno", "Vivo X"]
         self.laptop_names = ["MacBook", "Dell XPS", "HP Spectre", "Lenovo ThinkPad", "Asus ZenBook"]
-        self.tablet_names = ["iPad", "Samsung Galaxy Tab", "Microsoft Surface", "Huawei MediaPad"]
+        self.tablet_names = ["iPad", "Samsung Galaxy Tab", "Microsoft Surface", "Huawei MatePad"]
         self.pc_names = ["HP Pavilion", "Dell Inspiron", "Lenovo IdeaPad", "Asus ROG"]
 
     def random_product(self, n=100):

@@ -220,22 +220,47 @@ class App:
         # Chuyển dữ liệu sang DataFrame
         df = pd.DataFrame(self.data)
 
-        # Tính toán rating trung bình và tổng review_count cho từng cụm
+        # Tính toán thống kê cho từng cụm
         cluster_stats = df.groupby("cluster").agg(
             avg_rating=("rating", "mean"),
-            total_reviews=("review_count", "sum")
+            total_reviews=("review_count", "sum"),
+            product_count=("id", "count")
+        ).reset_index()
+
+        # Phân loại cụm dựa trên chất lượng
+        cluster_stats["category"] = cluster_stats["avg_rating"].apply(
+            lambda x: "Tốt" if x > 4 else ("Trung lập" if 3 <= x <= 4 else "Tệ")
         )
 
-        # Xác định cụm có rating cao nhất và review lớn nhất
-        best_rating_cluster = cluster_stats["avg_rating"].idxmax()
-        most_reviewed_cluster = cluster_stats["total_reviews"].idxmax()
+        # Lọc cụm tốt nhất (loại "Tốt" và có rating trung bình cao nhất)
+        good_clusters = cluster_stats[cluster_stats["category"] == "Tốt"]
+        if good_clusters.empty:
+            messagebox.showinfo("Thông báo", "Không có cụm nào có sản phẩm tốt để gợi ý.")
+            return
 
-        # Lọc sản phẩm từ cụm tốt nhất (rating cao nhất hoặc nhiều review nhất)
-        suggested_products = df[df["cluster"].isin([best_rating_cluster, most_reviewed_cluster])]
+        best_cluster = good_clusters.loc[good_clusters["avg_rating"].idxmax()]["cluster"]
 
-        # Hiển thị gợi ý trong TreeView
+        # Lọc sản phẩm từ cụm tốt nhất
+        suggested_products = df[df["cluster"] == best_cluster]
+
+        # Sắp xếp sản phẩm theo số lượng đánh giá giảm dần
+        suggested_products = suggested_products.sort_values(by="review_count", ascending=False)
+
+        # Hiển thị danh sách sản phẩm gợi ý
         self.display_data(suggested_products.to_dict("records"))
-        self.update_status("Hiển thị sản phẩm từ các cụm tốt nhất.")
+
+        # Cập nhật trạng thái
+        avg_rating = good_clusters.loc[good_clusters["cluster"] == best_cluster, "avg_rating"].values[0]
+        total_reviews = good_clusters.loc[good_clusters["cluster"] == best_cluster, "total_reviews"].values[0]
+        self.update_status(
+            f"Gợi ý sản phẩm từ cụm tốt nhất (Cụm {best_cluster}): "
+            f"Rating trung bình = {avg_rating:.2f}, Tổng số đánh giá = {total_reviews}."
+        )
+
+        # Hiển thị trực quan phân loại cụm
+        # self.display_cluster_quality(cluster_stats)
+
+    
 
 # Khởi chạy ứng dụng
 root = tk.Tk()
