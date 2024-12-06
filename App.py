@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from matplotlib.patches import Patch
 from DataGenerator import *
 from Clustering import *
 
@@ -20,6 +21,7 @@ class App:
         self.root.geometry(f'{window_width}x{window_height}+{position_left}+{position_top}')
         
         self.data_generator = DataGenerator()
+        self.canvas = None
         self.clustering = None  # Clustering sẽ được tạo khi người dùng chọn số cụm
         self.data = None
         self.sort_column = None  # Cột hiện tại được sắp xếp
@@ -27,8 +29,11 @@ class App:
         
         # Cấu hình style cho các widget
         self.style = ttk.Style()
-        self.style.configure("TButton", font=("Arial", 10), padding=6)
-        self.style.configure("TLabel", font=("Arial", 10))
+        self.style.configure("TButton", font=("Inter", 10), padding=6)
+        self.style.configure("TLabel", font=("Inter", 10))
+        self.style.configure("TTreeview", font=("Inter", 10))  # Đặt font cho Treeview
+        self.style.configure("TEntry", font=("Inter", 10))  # Đặt font cho Entry
+        self.style.configure("TScrollbar", font=("Inter", 10))  # Đặt font cho Scrollbar
         
         self.setup_ui()
 
@@ -38,10 +43,15 @@ class App:
         self.root.config(menu=menu_bar)
 
         file_menu = tk.Menu(menu_bar, tearoff=0)
-        menu_bar.add_cascade(label="Tệp", menu=file_menu)
+        menu_bar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Tải dữ liệu CSV", command=self.load_file)
         file_menu.add_command(label="Lưu dữ liệu CSV", command=self.save_file)
-        
+        file_menu.add_command(label="Reset", command=self.reset_screen)
+
+        # Thanh trạng thái - Do cấu trúc pack - Theo thứ tự 
+        self.status_bar = ttk.Label(self.root, text="Chào mừng bạn đến với Phân Cụm Sản Phẩm!", relief=tk.SUNKEN, anchor=tk.W, background="lightblue", padding=(10, 5))
+        self.status_bar.pack(side=tk.TOP, fill=tk.X)
+
         # Khung các nút chức năng
         action_frame = ttk.Frame(self.root, padding="10")
         action_frame.pack(fill=tk.X, padx=20, pady=10)
@@ -61,14 +71,15 @@ class App:
         btn_cluster = ttk.Button(action_frame, text="Phân cụm", command=self.cluster_data)
         btn_cluster.pack(side=tk.LEFT, padx=10)
 
+        # Thêm nút để hiển thị đánh giá chi tiết
+        btn_show_reviews = ttk.Button(action_frame, text="Xem đánh giá chi tiết", command=self.show_reviews)
+        btn_show_reviews.pack(side=tk.LEFT, padx=10)
+
         btn_save_result = ttk.Button(action_frame, text="Lưu kết quả CSV", command=self.save_result)
         btn_save_result.pack(side=tk.LEFT, padx=10)
-        
-        btn_suggest = ttk.Button(action_frame, text="Gợi ý sản phẩm tốt nhất", command=self.suggest_best_products)
-        btn_suggest.pack(side=tk.LEFT, padx=10)
 
         # Bảng hiển thị dữ liệu
-        columns = ["id", "name", "category", "brand", "rating", "review_count", "cluster"]
+        columns = ["id", "name", "category", "brand", "rating", "review_count", "cluster", "quality"]
         self.tree_frame = ttk.Frame(self.root)
         self.tree_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
 
@@ -82,35 +93,95 @@ class App:
         for col in columns:
             self.tree.heading(col, text=col, command=lambda c=col: self.sort_by_column(c))
             self.tree.column(col, width=120, anchor=tk.CENTER)
-        
-        # Thanh trạng thái
-        self.status_bar = ttk.Label(self.root, text="Chào mừng bạn đến với Phân Cụm Sản Phẩm!", relief=tk.SUNKEN, anchor=tk.W, background="lightblue", padding=(10, 5))
-        self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
     def random_100(self):
-        self.data = self.data_generator.random_product(100)
+        self.data = self.data_generator.random_product(100, save_reviews=True)
         self.display_data(self.data)
-        self.update_status("Dữ liệu ngẫu nhiên 100 sản phẩm đã được tạo.")
+        self.update_status("Dữ liệu ngẫu nhiên 100 sản phẩm và các đánh giá đã được tạo.")
 
     def random_10(self):
-        self.data = self.data_generator.random_product(10)
+        self.data = self.data_generator.random_product(10, save_reviews=True)
         self.display_data(self.data)
-        self.update_status("Dữ liệu ngẫu nhiên 10 sản phẩm đã được tạo.")
+        self.update_status("Dữ liệu ngẫu nhiên 10 sản phẩm và các đánh giá đã được tạo.")
 
     def load_file(self):
+        """Tải dữ liệu CSV từ file."""
         file_path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
         if file_path:
-            self.data = pd.read_csv(file_path).to_dict('records')
-            self.display_data(self.data)
-            self.update_status(f"Đã tải dữ liệu từ {file_path}.")
+            try:
+                # Đọc dữ liệu từ file CSV
+                self.data = []
+                with open(file_path, "r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        # Chuyển đổi dữ liệu cho đúng kiểu
+                        row["id"] = int(row["id"])
+                        row["rating"] = float(row["rating"])
+                        row["review_count"] = int(row["review_count"])
+                        self.data.append(row)
+
+                self.display_data(self.data)
+                self.update_status(f"Đã tải dữ liệu từ {file_path}.")
+            except Exception as e:
+                messagebox.showerror("Lỗi", f"Không thể đọc file: {str(e)}")
 
     def save_file(self):
-        if self.data:
-            file_path = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
-            if file_path:
-                df = pd.DataFrame(self.data)
-                df.to_csv(file_path, index=False)
+        """Lưu dữ liệu hiển thị vào file CSV."""
+        if not self.data:
+            messagebox.showwarning("Cảnh báo", "Không có dữ liệu để lưu!")
+            return
+
+        file_path = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+        if file_path:
+            try:
+                with open(file_path, "w", encoding="utf-8", newline="") as f:
+                    writer = csv.DictWriter(f, fieldnames=self.data[0].keys())
+                    writer.writeheader()
+                    writer.writerows(self.data)
+
                 self.update_status(f"Dữ liệu đã được lưu tại {file_path}.")
+            except Exception as e:
+                messagebox.showerror("Lỗi", f"Không thể lưu file: {str(e)}")
+
+    def show_reviews(self):
+        """Hiển thị đánh giá chi tiết của sản phẩm được chọn."""
+        selected_item = self.tree.selection()
+        if not selected_item:
+            messagebox.showerror("Lỗi", "Vui lòng chọn một sản phẩm để xem đánh giá chi tiết!")
+            return
+
+        # Lấy ID sản phẩm
+        item_data = self.tree.item(selected_item)
+        product_id = item_data["values"][0]
+
+        # Xác định đường dẫn file đánh giá
+        folder_name = os.listdir("data")[-1]  # Lấy thư mục dữ liệu mới nhất
+        review_file = os.path.join("data", folder_name, f"product_{product_id}_reviews.csv")
+
+        try:
+            # Đọc dữ liệu từ file CSV
+            reviews = []
+            with open(review_file, "r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+                next(reader)  # Bỏ qua tiêu đề
+                reviews = [row[0] for row in reader]
+
+            # Hiển thị đánh giá trong cửa sổ pop-up
+            review_window = tk.Toplevel(self.root)
+            review_window.title(f"Đánh giá chi tiết - Sản phẩm ID {product_id}")
+            review_window.geometry("400x300")
+
+            ttk.Label(review_window, text=f"Danh sách đánh giá chi tiết (ID: {product_id})", font=("Inter", 12, "bold")).pack(pady=10)
+            text_widget = tk.Text(review_window, wrap=tk.WORD, font=("Inter", 10))
+            text_widget.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+            for review in reviews:
+                text_widget.insert(tk.END, f"{review}\n")
+
+            text_widget.config(state=tk.DISABLED)
+        except FileNotFoundError:
+            messagebox.showerror("Lỗi", f"Không tìm thấy đánh giá cho sản phẩm ID {product_id}.")
+        except Exception as e:
+            messagebox.showerror("Lỗi", f"Không thể đọc dữ liệu đánh giá: {str(e)}")
 
     def cluster_data(self):
         if not self.data:
@@ -136,11 +207,38 @@ class App:
         self.clustering = Clustering(n_clusters=n_clusters)
         df = self.clustering.fit_predict(self.data)
         
-        # Cập nhật dữ liệu với nhãn cụm
+        # Thêm cột đánh giá chất lượng
+        df["quality"] = df["rating"].apply(
+            lambda x: "Tốt" if x > 4 else ("Trung bình" if 3 <= x <= 4 else "Kém")
+        )
+        
+        # Xác định cụm tốt nhất
+        cluster_stats = df.groupby("cluster").agg(
+            avg_rating=("rating", "mean"),
+            total_reviews=("review_count", "sum")
+        ).reset_index()
+        
+        # Lọc ra cụm tốt nhất (cụm có rating trung bình cao nhất và thuộc nhóm "Tốt")
+        good_clusters = cluster_stats[cluster_stats["avg_rating"] > 4]
+        if not good_clusters.empty:
+            best_cluster = good_clusters.loc[good_clusters["avg_rating"].idxmax()]
+            best_cluster_id = int(best_cluster["cluster"])
+            avg_rating = best_cluster["avg_rating"]
+            total_reviews = best_cluster["total_reviews"]
+            
+            # Cập nhật status bar với thông tin cụm tốt nhất
+            self.update_status(
+                f"Gợi ý sản phẩm từ cụm tốt nhất (Cụm {best_cluster_id}): "
+                f"Rating trung bình = {avg_rating:.2f}, Tổng số đánh giá = {total_reviews}."
+            )
+        else:
+            # Trường hợp không có cụm "Tốt"
+            self.update_status("Không có cụm nào thuộc nhóm 'Tốt'.")
+        
+        # Cập nhật dữ liệu với nhãn cụm và chất lượng
         self.data = df.to_dict("records")
         self.display_data(self.data)
         self.display_clusters(df)
-        self.update_status(f"Đã phân cụm với {n_clusters} cụm.")
 
     def save_result(self):
         if self.data:
@@ -167,16 +265,38 @@ class App:
         self.display_data(self.data)
 
     def display_clusters(self, df):
+        # Xóa biểu đồ cũ (nếu có)
+        for widget in self.tree_frame.winfo_children():
+            if isinstance(widget, tk.Canvas):
+                widget.destroy()
+
         # Hiển thị biểu đồ phân cụm
-        fig, ax = plt.subplots(figsize=(6, 4))
+        fig, ax = plt.subplots(figsize=(8, 6))  # Tăng kích thước biểu đồ
         scatter = ax.scatter(
-            df["rating"], df["review_count"], c=df["cluster"], cmap="viridis"
+            df["rating"], df["review_count"], c=df["cluster"], cmap="viridis", s=50
         )
+        
+        # Gắn nhãn cho trục
         ax.set_xlabel("Đánh giá trung bình")
         ax.set_ylabel("Số lượng đánh giá")
-        plt.colorbar(scatter, ax=ax)
+        ax.set_title("Biểu đồ phân cụm sản phẩm")
 
-        canvas = FigureCanvasTkAgg(fig, master=self.root)
+        # Tạo chú thích (legend)
+        clusters = df["cluster"].unique()
+        legend_labels = [Patch(color=scatter.cmap(scatter.norm(c)), label=f"Cụm {int(c)}") for c in clusters]
+        ax.legend(
+            handles=legend_labels, 
+            title="Cụm", 
+            bbox_to_anchor=(1.05, 1),  # Đặt chú thích bên ngoài biểu đồ
+            loc="upper left", 
+            borderaxespad=0
+        )
+
+        # Điều chỉnh khoảng cách để không gian biểu đồ và chú thích không bị chèn lên nhau
+        fig.subplots_adjust(right=0.8)
+
+        # Hiển thị biểu đồ trên giao diện Tkinter
+        canvas = FigureCanvasTkAgg(fig, master=self.tree_frame)
         canvas.get_tk_widget().pack(pady=10)
         canvas.draw()
 
@@ -212,55 +332,16 @@ class App:
         self.data = df.to_dict("records")
         return df
 
-    def suggest_best_products(self):
-        if not self.data or not self.clustering:
-            messagebox.showerror("Lỗi", "Chưa có dữ liệu hoặc chưa phân cụm!")
-            return
-
-        # Chuyển dữ liệu sang DataFrame
-        df = pd.DataFrame(self.data)
-
-        # Tính toán thống kê cho từng cụm
-        cluster_stats = df.groupby("cluster").agg(
-            avg_rating=("rating", "mean"),
-            total_reviews=("review_count", "sum"),
-            product_count=("id", "count")
-        ).reset_index()
-
-        # Phân loại cụm dựa trên chất lượng
-        cluster_stats["category"] = cluster_stats["avg_rating"].apply(
-            lambda x: "Tốt" if x > 4 else ("Trung lập" if 3 <= x <= 4 else "Tệ")
-        )
-
-        # Lọc cụm tốt nhất (loại "Tốt" và có rating trung bình cao nhất)
-        good_clusters = cluster_stats[cluster_stats["category"] == "Tốt"]
-        if good_clusters.empty:
-            messagebox.showinfo("Thông báo", "Không có cụm nào có sản phẩm tốt để gợi ý.")
-            return
-
-        best_cluster = good_clusters.loc[good_clusters["avg_rating"].idxmax()]["cluster"]
-
-        # Lọc sản phẩm từ cụm tốt nhất
-        suggested_products = df[df["cluster"] == best_cluster]
-
-        # Sắp xếp sản phẩm theo số lượng đánh giá giảm dần
-        suggested_products = suggested_products.sort_values(by="review_count", ascending=False)
-
-        # Hiển thị danh sách sản phẩm gợi ý
-        self.display_data(suggested_products.to_dict("records"))
-
-        # Cập nhật trạng thái
-        avg_rating = good_clusters.loc[good_clusters["cluster"] == best_cluster, "avg_rating"].values[0]
-        total_reviews = good_clusters.loc[good_clusters["cluster"] == best_cluster, "total_reviews"].values[0]
-        self.update_status(
-            f"Gợi ý sản phẩm từ cụm tốt nhất (Cụm {best_cluster}): "
-            f"Rating trung bình = {avg_rating:.2f}, Tổng số đánh giá = {total_reviews}."
-        )
-
-        # Hiển thị trực quan phân loại cụm
-        # self.display_cluster_quality(cluster_stats)
-
-    
+    def reset_screen(self):
+        # Xóa dữ liệu và các phần hiển thị
+        self.data = None
+        self.clustering = None
+        self.cluster_entry.delete(0, tk.END)  # Xóa nhập liệu số cụm
+        self.update_status("Màn hình đã được làm mới.")
+        
+        # Xóa tất cả các dòng trong Treeview
+        for item in self.tree.get_children():
+            self.tree.delete(item)
 
 # Khởi chạy ứng dụng
 root = tk.Tk()
