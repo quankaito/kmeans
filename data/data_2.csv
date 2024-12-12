@@ -1,0 +1,101 @@
+id,name,category,brand,rating,review_count
+1,MacBook 2023,Laptop,Apple,3.3,295
+2,Vivo X 50 Lite,Điện thoại,HP,2.7,124
+3,Dell Inspiron 23,PC,Dell,3.4,482
+4,Asus ZenBook Ultra,Laptop,Asus,4.2,115
+5,Microsoft Surface 8,Tablet,HP,3.8,25
+6,Samsung Galaxy 79 Lite,Điện thoại,Dell,1.2,359
+7,MacBook Ultra,Laptop,Asus,3.1,396
+8,Lenovo IdeaPad 27,PC,Asus,2.7,386
+9,Asus ZenBook 2023,Laptop,Samsung,4.3,269
+10,Lenovo IdeaPad 27,PC,Lenovo,3.6,401
+11,Xiaomi Mi 53 Pro,Điện thoại,Asus,1.2,250
+12,Asus ZenBook Pro,Laptop,Asus,3.1,167
+13,Samsung Galaxy Tab 12,Tablet,Lenovo,1.5,336
+14,Huawei MatePad 10,Tablet,Samsung,1.9,454
+15,Asus ROG 19,PC,HP,4.4,473
+16,HP Spectre Ultra,Laptop,Samsung,3.5,141
+17,iPhone 61 Lite,Điện thoại,Dell,2.5,53
+18,Samsung Galaxy 47 Ultra,Điện thoại,HP,3.4,262
+19,Dell Inspiron 24,PC,HP,5.0,411
+20,Dell Inspiron 16,PC,HP,4.5,414
+21,Huawei MatePad 7,Tablet,Lenovo,4.9,273
+22,MacBook Ultra,Laptop,HP,1.5,111
+23,MacBook 2023,Laptop,Apple,4.0,27
+24,HP Pavilion 20,PC,Dell,1.0,35
+25,iPad 8,Tablet,Samsung,3.2,133
+26,iPhone 40 Max,Điện thoại,Apple,2.0,349
+27,Microsoft Surface 10,Tablet,Samsung,2.4,74
+28,Samsung Galaxy Tab 10,Tablet,Lenovo,4.8,426
+29,Samsung Galaxy Tab 12,Tablet,HP,3.9,469
+30,Dell Inspiron 30,PC,Asus,3.5,250
+31,Dell Inspiron 26,PC,Dell,1.6,340
+32,MacBook 2023,Laptop,Apple,3.5,424
+33,HP Pavilion 17,PC,Dell,2.0,57
+34,MacBook 2023,Laptop,Samsung,2.2,471
+35,HP Spectre 2024,Laptop,Asus,2.1,21
+36,Lenovo ThinkPad Ultra,Laptop,HP,4.6,239
+37,Lenovo ThinkPad Ultra,Laptop,Dell,3.4,447
+38,HP Spectre 2024,Laptop,Samsung,1.2,433
+39,Lenovo IdeaPad 30,PC,Apple,5.0,386
+40,Oppo Reno 69 Ultra,Điện thoại,Lenovo,1.7,438
+41,Huawei MatePad 11,Tablet,Asus,3.3,436
+42,Lenovo ThinkPad Ultra,Laptop,Lenovo,2.5,140
+43,Asus ZenBook 2023,Laptop,Dell,2.2,170
+44,Samsung Galaxy Tab 8,Tablet,Asus,3.1,360
+45,Dell XPS Ultra,Laptop,Samsung,1.3,418
+46,Lenovo ThinkPad 2024,Laptop,Lenovo,2.2,233
+47,HP Pavilion 19,PC,Lenovo,1.4,82
+48,Dell XPS 2024,Laptop,Samsung,3.9,483
+49,Dell Inspiron 30,PC,Asus,2.3,255
+50,MacBook Ultra,Laptop,Lenovo,3.3,495
+51,Dell Inspiron 19,PC,Asus,4.7,111
+52,Dell XPS Pro,Laptop,Dell,4.9,450
+53,Lenovo ThinkPad Ultra,Laptop,Dell,3.2,325
+54,Huawei MatePad 7,Tablet,Samsung,3.2,448
+55,Samsung Galaxy Tab 8,Tablet,Apple,2.7,352
+56,Huawei MatePad 12,Tablet,Dell,3.4,418
+57,Dell Inspiron 28,PC,Apple,3.4,437
+58,MacBook Ultra,Laptop,Dell,4.7,153
+59,Vivo X 39 Pro,Điện thoại,Apple,4.4,356
+60,Samsung Galaxy Tab 11,Tablet,Apple,3.1,300
+61,Asus ZenBook 2024,Laptop,Asus,4.5,209
+62,Xiaomi Mi 17 Ultra,Điện thoại,Lenovo,4.2,169
+63,Xiaomi Mi 13 Pro,Điện thoại,Samsung,1.8,375
+64,Microsoft Surface 9,Tablet,Apple,5.0,68
+65,Xiaomi Mi 70 Pro,Điện thoại,Samsung,2.5,128
+66,Microsoft Surface 11,Tablet,Asus,4.4,347
+67,Xiaomi Mi 41 Ultra,Điện thoại,Dell,4.5,245
+68,Oppo Reno 71 Ultra,Điện thoại,HP,4.9,372
+69,Xiaomi Mi 74 Pro,Điện thoại,Asus,3.3,104
+70,iPhone 48 Pro,Điện thoại,HP,2.2,235
+71,Samsung Galaxy 100 Ultra,Điện thoại,Apple,1.9,5
+72,Samsung Galaxy 52 Pro,Điện thoại,Dell,1.3,321
+73,HP Pavilion 15,PC,Samsung,2.4,349
+74,iPhone 28 Lite,Điện thoại,Lenovo,1.9,167
+75,iPhone 75 Lite,Điện thoại,Asus,1.3,313
+76,Asus ZenBook 2023,Laptop,Apple,4.6,138
+77,HP Pavilion 25,PC,Samsung,3.6,25
+78,Dell Inspiron 17,PC,Lenovo,4.7,474
+79,HP Pavilion 20,PC,Apple,4.0,216
+80,iPad 8,Tablet,Samsung,4.4,420
+81,HP Spectre Pro,Laptop,Lenovo,2.4,55
+82,Asus ROG 25,PC,Dell,1.9,479
+83,Huawei MatePad 8,Tablet,Lenovo,1.2,187
+84,Asus ROG 21,PC,Samsung,3.2,471
+85,Asus ROG 22,PC,Dell,3.8,455
+86,Samsung Galaxy 77 Max,Điện thoại,Samsung,2.7,352
+87,Dell Inspiron 27,PC,Apple,3.8,382
+88,HP Spectre 2024,Laptop,Samsung,2.0,297
+89,HP Pavilion 25,PC,Dell,2.4,363
+90,HP Spectre Ultra,Laptop,HP,2.1,12
+91,iPhone 22 Pro,Điện thoại,Apple,3.0,418
+92,Lenovo ThinkPad Pro,Laptop,Asus,2.2,444
+93,Samsung Galaxy 42 Ultra,Điện thoại,Dell,4.5,111
+94,Lenovo IdeaPad 16,PC,Asus,4.7,160
+95,Asus ZenBook 2023,Laptop,Dell,1.9,97
+96,iPad 7,Tablet,Samsung,2.6,497
+97,Lenovo IdeaPad 25,PC,Asus,3.7,57
+98,Xiaomi Mi 58 Ultra,Điện thoại,Asus,1.9,457
+99,Dell Inspiron 23,PC,Dell,3.2,353
+100,iPhone 82 Ultra,Điện thoại,Apple,3.4,468

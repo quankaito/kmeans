@@ -1,0 +1,26 @@
+Bước 2: Phân tích đồ thị Elbow
+Giả sử kết quả đồ thị Elbow của bạn trông như sau:
+
+SSE giảm mạnh khi k tăng từ 1 đến 2.
+Sau đó, khi k tăng từ 2 lên 3, sự giảm SSE trở nên rất chậm, và sự chênh lệch giữa các giá trị SSE không còn lớn.
+Điều này có nghĩa là k = 2 là điểm gập (elbow) và là số cụm tối ưu cho bài toán này.
+
+Giải thích vì sao số cụm là 2 thường là phương án tối ưu:
+Sự giảm SSE lớn nhất xảy ra khi chuyển từ 1 cụm sang 2 cụm, cho thấy rằng dữ liệu có thể được chia thành 2 nhóm có sự khác biệt rõ rệt.
+Sau k = 2, sự giảm SSE trở nên ít rõ ràng, điều này có nghĩa là việc chia dữ liệu thành nhiều cụm hơn (3, 4, 5,...) không tạo ra sự cải thiện đáng kể về chất lượng phân cụm (theo SSE). Điều này chỉ ra rằng các cụm đã ổn định và không cần chia thêm.
+Trong trường hợp của bạn, 2 cụm là lựa chọn hợp lý vì:
+
+Một cụm có thể bao gồm các sản phẩm có rating cao và số lượng đánh giá lớn (ví dụ, các sản phẩm nổi bật, phổ biến).
+Cụm còn lại có thể bao gồm các sản phẩm có rating thấp hơn hoặc số lượng đánh giá ít hơn.
+Bước 3: Giải thích khi nào số cụm khác 2 có thể hợp lý
+Mặc dù trong trường hợp này, k = 2 có vẻ là số cụm tối ưu, nhưng trong một số trường hợp khác, phương pháp Elbow có thể cho ra kết quả số cụm lớn hơn hoặc nhỏ hơn. Ví dụ:
+
+Nếu dữ liệu có sự phân bố phức tạp hoặc có nhiều nhóm con nhỏ, Elbow Method có thể chỉ ra rằng số cụm tối ưu là 3 hoặc 4.
+Nếu dữ liệu rất đồng nhất, có thể Elbow Method sẽ chỉ ra rằng 1 cụm là đủ.
+Tuy nhiên, số cụm bằng 2 thường gặp trong các tình huống dữ liệu có sự phân chia rõ ràng giữa 2 nhóm (ví dụ, sản phẩm "hot" và sản phẩm "bình thường").
+
+Ví dụ về Tìm kiếm Cụm
+Giả sử với k = 2, thuật toán K-Means có thể chia dữ liệu của bạn thành 2 cụm như sau:
+
+Cụm 1: Sản phẩm có rating cao (> 4.0) và review count lớn (sản phẩm được ưa chuộng).
+Cụm 2: Sản phẩm có rating thấp hơn hoặc review count thấp (sản phẩm ít được chú ý).

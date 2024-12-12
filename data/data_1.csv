@@ -1,0 +1,101 @@
+id,name,category,brand,rating,review_count,cluster,quality
+1,Asus ROG 20,PC,Samsung,4.5,337,0,Tốt
+2,HP Pavilion 23,PC,Asus,2.0,150,1,Kém
+3,Microsoft Surface 11,Tablet,Apple,3.4,464,0,Trung bình
+4,Lenovo ThinkPad 2024,Laptop,Samsung,1.6,221,1,Kém
+5,Samsung Galaxy Tab 12,Tablet,Asus,2.5,101,2,Kém
+6,Samsung Galaxy Tab 12,Tablet,Lenovo,3.4,495,0,Trung bình
+7,Asus ZenBook Pro,Laptop,Lenovo,1.2,110,1,Kém
+8,Lenovo IdeaPad 26,PC,HP,4.7,462,0,Tốt
+9,Vivo X 43 Max,Điện thoại,Asus,1.1,101,1,Kém
+10,Dell Inspiron 17,PC,Samsung,3.9,366,0,Trung bình
+11,Oppo Reno 34 Lite,Điện thoại,HP,2.5,237,1,Kém
+12,Oppo Reno 34 Max,Điện thoại,Dell,3.3,75,2,Trung bình
+13,Huawei MatePad 12,Tablet,Samsung,2.4,352,1,Kém
+14,Microsoft Surface 7,Tablet,Lenovo,3.0,350,0,Trung bình
+15,Asus ROG 16,PC,Apple,4.0,256,2,Trung bình
+16,Xiaomi Mi 66 Max,Điện thoại,Asus,1.1,214,1,Kém
+17,Huawei MatePad 12,Tablet,Asus,4.2,24,2,Tốt
+18,HP Spectre 2024,Laptop,Asus,4.6,475,0,Tốt
+19,HP Pavilion 30,PC,Apple,4.8,295,0,Tốt
+20,Samsung Galaxy 69 Pro,Điện thoại,Lenovo,1.5,361,1,Kém
+21,Microsoft Surface 8,Tablet,HP,4.0,265,0,Trung bình
+22,Lenovo ThinkPad 2023,Laptop,Asus,4.0,330,0,Trung bình
+23,Asus ZenBook Ultra,Laptop,Samsung,4.4,127,2,Tốt
+24,Vivo X 80 Max,Điện thoại,Apple,3.8,174,2,Trung bình
+25,Asus ZenBook Pro,Laptop,Apple,1.9,2,1,Kém
+26,MacBook 2023,Laptop,Dell,1.8,474,1,Kém
+27,Samsung Galaxy Tab 11,Tablet,Apple,1.4,5,1,Kém
+28,iPad 9,Tablet,HP,4.2,135,2,Tốt
+29,MacBook Pro,Laptop,Asus,3.5,198,2,Trung bình
+30,Oppo Reno 17 Lite,Điện thoại,Lenovo,3.4,102,2,Trung bình
+31,Xiaomi Mi 95 Max,Điện thoại,Samsung,3.7,423,0,Trung bình
+32,Lenovo ThinkPad Pro,Laptop,Lenovo,2.0,408,1,Kém
+33,Samsung Galaxy Tab 12,Tablet,Samsung,4.2,395,0,Tốt
+34,Asus ROG 29,PC,Asus,4.1,122,2,Tốt
+35,MacBook Ultra,Laptop,Lenovo,1.7,26,1,Kém
+36,Huawei MatePad 8,Tablet,Dell,1.4,76,1,Kém
+37,HP Pavilion 29,PC,Lenovo,4.5,191,2,Tốt
+38,HP Spectre 2024,Laptop,Lenovo,3.8,340,0,Trung bình
+39,Samsung Galaxy Tab 10,Tablet,Apple,1.8,82,1,Kém
+40,Lenovo IdeaPad 24,PC,Dell,2.8,390,0,Kém
+41,Asus ROG 30,PC,Dell,1.6,435,1,Kém
+42,Asus ROG 16,PC,Lenovo,2.9,489,0,Kém
+43,Dell Inspiron 19,PC,Samsung,4.6,33,2,Tốt
+44,Lenovo IdeaPad 25,PC,Apple,3.6,164,2,Trung bình
+45,Dell Inspiron 16,PC,Apple,3.1,209,2,Trung bình
+46,Samsung Galaxy 49 Max,Điện thoại,Samsung,4.8,276,0,Tốt
+47,Lenovo IdeaPad 20,PC,Apple,1.7,425,1,Kém
+48,Lenovo ThinkPad 2023,Laptop,HP,1.2,124,1,Kém
+49,Dell Inspiron 20,PC,Apple,1.3,372,1,Kém
+50,HP Spectre Ultra,Laptop,HP,3.3,164,2,Trung bình
+51,Samsung Galaxy Tab 12,Tablet,Asus,1.2,198,1,Kém
+52,Microsoft Surface 7,Tablet,Samsung,2.6,401,0,Kém
+53,Samsung Galaxy 35 Ultra,Điện thoại,Apple,3.8,160,2,Trung bình
+54,HP Pavilion 17,PC,HP,1.5,365,1,Kém
+55,HP Spectre 2023,Laptop,Samsung,3.0,401,0,Trung bình
+56,Asus ROG 16,PC,Samsung,1.9,52,1,Kém
+57,Microsoft Surface 11,Tablet,Lenovo,3.0,102,2,Trung bình
+58,Oppo Reno 87 Lite,Điện thoại,Apple,3.9,72,2,Trung bình
+59,Asus ZenBook 2024,Laptop,Apple,4.5,125,2,Tốt
+60,iPhone 83 Lite,Điện thoại,HP,2.5,23,2,Kém
+61,Samsung Galaxy 70 Pro,Điện thoại,Asus,4.5,389,0,Tốt
+62,Asus ROG 30,PC,Apple,2.8,151,2,Kém
+63,Lenovo IdeaPad 21,PC,Apple,1.6,227,1,Kém
+64,Lenovo IdeaPad 20,PC,Lenovo,3.4,74,2,Trung bình
+65,Asus ZenBook 2024,Laptop,Asus,3.9,275,0,Trung bình
+66,Oppo Reno 35 Pro,Điện thoại,Samsung,3.4,202,2,Trung bình
+67,Huawei MatePad 9,Tablet,Apple,4.5,410,0,Tốt
+68,Xiaomi Mi 49 Pro,Điện thoại,Asus,2.7,382,0,Kém
+69,iPad 12,Tablet,Samsung,4.2,427,0,Tốt
+70,HP Pavilion 27,PC,Asus,3.9,7,2,Trung bình
+71,iPhone 45 Ultra,Điện thoại,Lenovo,1.7,386,1,Kém
+72,Dell Inspiron 22,PC,HP,1.6,297,1,Kém
+73,Xiaomi Mi 57 Ultra,Điện thoại,Samsung,4.2,437,0,Tốt
+74,HP Spectre 2024,Laptop,Lenovo,3.9,472,0,Trung bình
+75,Microsoft Surface 7,Tablet,Samsung,4.5,459,0,Tốt
+76,Samsung Galaxy Tab 11,Tablet,HP,2.8,472,0,Kém
+77,MacBook 2024,Laptop,Dell,3.5,288,0,Trung bình
+78,Oppo Reno 19 Pro,Điện thoại,HP,3.5,88,2,Trung bình
+79,Huawei MatePad 8,Tablet,HP,3.2,411,0,Trung bình
+80,iPhone 22 Max,Điện thoại,Samsung,2.6,249,1,Kém
+81,Lenovo ThinkPad Ultra,Laptop,Dell,1.2,231,1,Kém
+82,Lenovo ThinkPad Ultra,Laptop,Apple,2.2,463,0,Kém
+83,iPad 10,Tablet,HP,3.2,271,0,Trung bình
+84,HP Pavilion 18,PC,Samsung,2.0,398,1,Kém
+85,MacBook Ultra,Laptop,Samsung,2.8,326,0,Kém
+86,Dell Inspiron 16,PC,Apple,2.5,268,1,Kém
+87,Asus ZenBook 2023,Laptop,Dell,2.2,282,1,Kém
+88,Xiaomi Mi 52 Pro,Điện thoại,Asus,1.9,389,1,Kém
+89,MacBook Ultra,Laptop,Apple,1.0,301,1,Kém
+90,HP Pavilion 25,PC,HP,4.8,363,0,Tốt
+91,Samsung Galaxy Tab 12,Tablet,Asus,2.6,193,1,Kém
+92,iPhone 63 Lite,Điện thoại,HP,5.0,393,0,Tốt
+93,HP Spectre Pro,Laptop,Lenovo,4.8,134,2,Tốt
+94,Dell Inspiron 30,PC,Apple,2.7,465,0,Kém
+95,Dell Inspiron 24,PC,Apple,2.4,461,0,Kém
+96,Asus ZenBook Pro,Laptop,Dell,1.3,212,1,Kém
+97,Vivo X 19 Lite,Điện thoại,Asus,3.9,317,0,Trung bình
+98,Samsung Galaxy 66 Pro,Điện thoại,Samsung,1.8,245,1,Kém
+99,Samsung Galaxy 19 Pro,Điện thoại,Asus,1.6,94,1,Kém
+100,Dell Inspiron 18,PC,Dell,4.5,119,2,Tốt

@@ -1,0 +1,57 @@
+Hàm elbow_method trong đoạn mã của bạn sử dụng một phương pháp gọi là Elbow Method để tìm số lượng cụm tối ưu trong phân tích phân cụm (clustering). Đây là một kỹ thuật phổ biến trong học máy, đặc biệt là khi sử dụng thuật toán phân cụm K-Means.
+
+1. Mục đích của Elbow Method
+Elbow Method nhằm mục đích tìm ra số lượng cụm (k) tối ưu mà thuật toán K-Means nên sử dụng, giúp mô hình phân cụm dữ liệu một cách hiệu quả. Mục tiêu là xác định giá trị của k (số cụm) sao cho phân tích phân cụm có thể nắm bắt được đa dạng trong dữ liệu, nhưng không gây ra sự phức tạp thừa thãi (overfitting).
+
+2. Các bước trong Elbow Method
+Hàm elbow_method thực hiện các bước sau:
+
+a. Chuẩn bị Dữ liệu
+Dữ liệu đầu vào là một DataFrame (df) với ít nhất hai cột quan trọng: rating và review_count, đại diện cho các đặc trưng của sản phẩm (đánh giá và số lượng đánh giá). Đầu tiên, dữ liệu này được chuẩn hóa (scaling) bằng cách sử dụng StandardScaler từ thư viện sklearn để đảm bảo rằng tất cả các đặc trưng có cùng độ lớn và không bị ảnh hưởng bởi các đơn vị khác nhau giữa các cột (rating có thể có phạm vi từ 1 đến 5, trong khi review count có thể có phạm vi từ 1 đến hàng nghìn).
+
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(features)
+
+b. Chạy K-Means cho nhiều giá trị của k
+Tiếp theo, thuật toán K-Means được áp dụng cho một loạt các giá trị k (số lượng cụm). Các giá trị của k được thử từ 1 đến 10 cụm (k_range = range(1, 11)), và với mỗi k, thuật toán K-Means sẽ tính toán SSE (Sum of Squared Errors).
+
+SSE là tổng bình phương khoảng cách giữa các điểm dữ liệu và tâm cụm của chúng. SSE càng nhỏ thì các điểm dữ liệu càng gần với các tâm cụm, tức là mô hình phân cụm càng "tốt".
+Quá trình này lặp lại với các giá trị k khác nhau, từ k=1 đến k=10. Kết quả của mỗi lần chạy là một giá trị SSE cho mỗi k.
+
+sse = []
+for k in k_range:
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    kmeans.fit(scaled_features)
+    sse.append(kmeans.inertia_)  # inertia_ là SSE của mô hình
+
+c. Tìm điểm gập (Elbow)
+Phương pháp "elbow" dựa trên quan sát rằng, khi số lượng cụm tăng, SSE sẽ giảm dần vì các điểm dữ liệu gần tâm cụm hơn. Tuy nhiên, sau một điểm nhất định, việc tăng số lượng cụm không còn làm giảm đáng kể SSE nữa. Điểm gập (elbow) là vị trí mà tốc độ giảm của SSE thay đổi đột ngột, và đây chính là số lượng cụm tối ưu.
+
+Để tìm điểm gập này, bạn cần phải tính đạo hàm bậc hai của đồ thị SSE (tức là sự thay đổi trong độ dốc của đồ thị), vì sự thay đổi lớn nhất thường xuất hiện tại điểm gập. Sự thay đổi này được tính bằng cách lấy độ chênh lệch giữa các giá trị SSE liên tiếp và sau đó tính độ chênh lệch của các giá trị đó.
+
+def find_elbow_point(sse, k_range):
+    diffs = np.diff(sse)  # Sự chênh lệch SSE giữa các cụm k
+    curvature = np.diff(diffs)  # Đạo hàm bậc hai để đo độ cong
+    elbow_point = np.argmax(curvature) + 2  # Điểm tối ưu thường là nơi độ cong lớn nhất
+    return elbow_point
+
+np.diff(sse) tính toán sự chênh lệch giữa các giá trị SSE của các k liên tiếp.
+np.diff(diffs) tính toán sự thay đổi trong sự chênh lệch, cho phép xác định sự thay đổi đột ngột trong tốc độ giảm của SSE.
+np.argmax(curvature) tìm vị trí có sự thay đổi lớn nhất trong độ cong, và +2 để điều chỉnh chỉ số vì np.diff giảm độ dài một bậc.
+
+d. Vẽ đồ thị Elbow
+Cuối cùng, hàm vẽ đồ thị Elbow để minh họa quá trình tìm số cụm tối ưu. Đồ thị này vẽ SSE theo số cụm k và đánh dấu điểm gập (elbow point) ở vị trí tối ưu.
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(k_range, sse, marker="o", linestyle="--", color="b", label="SSE")
+ax.axvline(optimal_k, color="r", linestyle="--", label=f"Elbow: k={optimal_k}")
+ax.set_xlabel("Số cụm (k)")
+ax.set_ylabel("SSE")
+ax.set_title("Elbow Method - Tìm số cụm tối ưu")
+ax.legend()
+ax.grid(True)
+
+4. Tóm lại
+Elbow Method giúp xác định số cụm tối ưu bằng cách vẽ đồ thị SSE theo số cụm.
+Sự thay đổi trong SSE (đặc biệt là sự thay đổi đột ngột) cho thấy điểm gập, và số cụm tại điểm gập này được coi là tối ưu.
+Phương pháp này giúp tìm ra số cụm mà mô hình phân cụm K-Means sẽ hoạt động tốt nhất mà không bị dư thừa hoặc thiếu sót.
